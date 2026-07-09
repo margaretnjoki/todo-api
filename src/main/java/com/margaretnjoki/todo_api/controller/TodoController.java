@@ -2,9 +2,12 @@ package com.margaretnjoki.todo_api.controller;
 
 import com.margaretnjoki.todo_api.dto.CreateTodoRequest;
 import com.margaretnjoki.todo_api.dto.TodoResponse;
+import com.margaretnjoki.todo_api.dto.UpdateTodoRequest;
+import com.margaretnjoki.todo_api.model.Todo;
 import com.margaretnjoki.todo_api.service.TodoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +43,14 @@ public class TodoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         service.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public Todo updateTitle(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateTodoRequest request) {
+
+        return service.updateTitle(id, request.title());
     }
 }
 

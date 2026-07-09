@@ -9,35 +9,45 @@ import java.util.*;
 
 @Service
 public class TodoService {
-    private final Map<UUID, Todo> store=new HashMap<>();
+    private final Map<UUID, Todo> store = new HashMap<>();
 
-    public List<Todo> findAll(){
+    public List<Todo> findAll() {
         return new ArrayList<>(store.values());
     }
-    public Todo findById(UUID id){
-      Todo todo=store.get(id);
-      if (todo==null){
-          throw new TodoNotFoundException(id);
-      }
-      return todo;
+
+    public Todo findById(UUID id) {
+        Todo todo = store.get(id);
+        if (todo == null) {
+            throw new TodoNotFoundException(id);
+        }
+        return todo;
     }
 
-    public Todo create(String title){
-        Todo todo=new Todo(UUID.randomUUID(), title,false, Instant.now());
+    public Todo create(String title) {
+        Todo todo = new Todo(UUID.randomUUID(), title, false, Instant.now());
         store.put(todo.getId(), todo);
         return todo;
     }
 
-    public Todo markDone(UUID id){
-        Todo todo=findById(id);
+    public Todo markDone(UUID id) {
+        Todo todo = findById(id);
         todo.setDone(true);
         return todo;
     }
 
-    public void delete(UUID id){
-       if (!store.containsKey(id)){
-           throw new TodoNotFoundException(id);
-       }
-       store.remove(id);
+    public void delete(UUID id) {
+        if (!store.containsKey(id)) {
+            throw new TodoNotFoundException(id);
+        }
+        store.remove(id);
+    }
+
+    public Todo updateTitle(UUID id, String title) {
+        Todo todo = store.get(id);
+        if (todo == null) {
+            throw new NoSuchElementException("Todo not found");
+        }
+        todo.setTitle(title);
+        return todo;
     }
 }
