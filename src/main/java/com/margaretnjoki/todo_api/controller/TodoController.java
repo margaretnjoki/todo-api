@@ -3,13 +3,11 @@ package com.margaretnjoki.todo_api.controller;
 import com.margaretnjoki.todo_api.dto.CreateTodoRequest;
 import com.margaretnjoki.todo_api.dto.TodoResponse;
 import com.margaretnjoki.todo_api.dto.UpdateTodoRequest;
-import com.margaretnjoki.todo_api.model.Todo;
 import com.margaretnjoki.todo_api.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +54,7 @@ public class TodoController {
     public void delete(@PathVariable UUID id) {
         service.delete(id);
     }
-
+/*
     @PutMapping("/{id}/{title}")
     @Operation(summary = "update the title of the todo by id ")
     public Todo updateTitle(
@@ -65,12 +63,13 @@ public class TodoController {
 
         return service.updateTitle(id, request.title());
     }
+ */
 
     @PutMapping("/{id}")
     public TodoResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateTodoRequest request) {
         return TodoResponse.from(service.update(id, request));
     }
-
+/*
     @GetMapping("/completed")
     @Operation(summary = "List all completed todos")
     public List<TodoResponse> completed() {
@@ -79,6 +78,7 @@ public class TodoController {
                 .map(TodoResponse::from)
                 .toList();
     }
+ */
 }
 
 
