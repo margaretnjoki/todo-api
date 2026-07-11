@@ -2,6 +2,7 @@ package com.margaretnjoki.todo_api.controller;
 
 import com.margaretnjoki.todo_api.dto.CreateTodoRequest;
 import com.margaretnjoki.todo_api.dto.TodoResponse;
+import com.margaretnjoki.todo_api.dto.TodoStatsResponse;
 import com.margaretnjoki.todo_api.dto.UpdateTodoRequest;
 import com.margaretnjoki.todo_api.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,7 +70,7 @@ public class TodoController {
     public TodoResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateTodoRequest request) {
         return TodoResponse.from(service.update(id, request));
     }
-/*
+
     @GetMapping("/completed")
     @Operation(summary = "List all completed todos")
     public List<TodoResponse> completed() {
@@ -78,7 +79,10 @@ public class TodoController {
                 .map(TodoResponse::from)
                 .toList();
     }
- */
+    @GetMapping("/stats")
+    public TodoStatsResponse allAndCompleted(){
+        return service.count();
+    }
 }
 
 
